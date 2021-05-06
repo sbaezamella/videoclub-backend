@@ -1,0 +1,6 @@
+asyncpg
+asynctest
+fastapi
+requests
+tortoise-orm[asyncpg]
+uvicorn

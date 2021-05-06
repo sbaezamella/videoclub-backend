@@ -7,7 +7,8 @@ FROM python:3 as base
 
 # Install Requirements
 COPY requirements.txt /
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
+COPY requirements-dev.txt /
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements-dev.txt
 
 #########
 # FINAL #
@@ -18,6 +19,10 @@ FROM python:3-slim
 
 # Create directory for the app user
 RUN mkdir -p /home/app
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Create the app user
 RUN groupadd app && useradd -g app app

@@ -14,7 +14,7 @@ register_tortoise(
 )
 
 
-@app.get("/")
+@app.get("/ping")
 async def ping():
     return {"ping": "pong"}
 
