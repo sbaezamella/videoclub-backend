@@ -1,11 +1,27 @@
 version: '3.8'
 
 services:
+  db:
+    container_name: videoclub-psql
+    image: postgres:13.2-alpine
+    volumes:
+      - ./postgres-data:/var/lib/postgres/data
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: password
+
   api:
     container_name: videoclub-api
     build: .
-    command: 'uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000'
+    command: |
+      bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000'
+    depends_on:
+      - db
     ports:
       - 8000:8000
     volumes:
       - ./:/home/app/fastapi
+
+volumes:
+  postgres-data:
