@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$.py.class
+.pytest_cache
+
+# Environments
+env/
+
+# VisualStudioCode
+.vscode/
+
+# Version Control
+.git/
+.gitignore
+
+# Docker specifics
+.dockerignore
+docker-compose.yml
+Dockerfile
