@@ -10,6 +10,13 @@ services:
       - 5432
     environment:
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: videoclub
+
+  adminer:
+    container_name: videoclub-adminer
+    image: adminer
+    ports:
+      - 8080:8080
 
   api:
     container_name: videoclub-api
