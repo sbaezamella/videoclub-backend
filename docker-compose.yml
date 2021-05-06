@@ -3,32 +3,34 @@ version: '3.8'
 services:
   db:
     container_name: videoclub-psql
-    image: postgres:13.2-alpine
-    volumes:
-      - ./postgres-data:/var/lib/postgres/data
-    expose:
-      - 5432
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: videoclub
+    expose:
+      - 5432
+    image: postgres:13.2-alpine
+    volumes:
+      - ./postgres-data:/var/lib/postgres/data
 
   adminer:
     container_name: videoclub-adminer
     image: adminer
     ports:
-      - 8080:8080
+      - '8080:8080'
 
   api:
-    container_name: videoclub-api
     build:
       context: ./project
       dockerfile: Dockerfile
     command: |
       bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000'
+    container_name: videoclub-api
     depends_on:
       - db
+    env_file:
+      - .env
     ports:
-      - 8000:8000
+      - '8000:8000'
     volumes:
       - ./project:/home/app/fastapi
 
