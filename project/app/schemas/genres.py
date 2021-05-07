@@ -7,8 +7,6 @@ from pydantic import BaseModel
 # Shared properties
 class GenreBase(BaseModel):
     name: Optional[str]
-    created_at: datetime
-    updated_at: datetime
 
 
 # Properties to receive on genre creation

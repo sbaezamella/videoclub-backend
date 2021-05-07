@@ -1,1 +1,1 @@
-from .genres import Genre, GenreCreate
+from .genres import Genre, GenreCreate, GenreUpdate

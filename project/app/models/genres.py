@@ -4,7 +4,9 @@ from tortoise.models import Model
 
 class Genre(Model):
     id = fields.IntField(pk=True)
-    name = fields.CharField(max_length=50)
+    name = fields.CharField(
+        min_length=1, max_length=50, unique=True, null=False
+    )  # noqa
     created_at = fields.DatetimeField()
     updated_at = fields.DatetimeField()
 
