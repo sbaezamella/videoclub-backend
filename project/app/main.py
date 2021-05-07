@@ -1,11 +1,10 @@
 import logging
 
-from fastapi import FastAPI
-
 from app.api.v1.api import api_router
 from app.api.v1.endpoints.ping import router
-from app.db.init import init_db
 from app.core.config import settings
+from app.db.init import init_db
+from fastapi import FastAPI
 
 log = logging.getLogger(__name__)
 
