@@ -1,3 +1,4 @@
+aerich
 asyncpg
 asynctest
 fastapi
