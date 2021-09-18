@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from app.crud import crud_genre
 from starlette.testclient import TestClient
+
+from app.crud import crud_genre
 
 url = "/api/v1"
 

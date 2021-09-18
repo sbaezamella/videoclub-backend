@@ -1,9 +1,10 @@
 from typing import List
 
-from app import models, schemas
-from app.crud import crud_genre
 from fastapi import APIRouter, HTTPException, Path, Response, status
 from tortoise.exceptions import IntegrityError
+
+from app import models, schemas
+from app.crud import crud_genre
 
 router = APIRouter()
 

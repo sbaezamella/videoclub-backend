@@ -38,5 +38,4 @@ async def put(id: int, payload: GenreUpdate) -> Union[dict, None]:
 
 async def delete(id: int):
     genre = await Genre.filter(id=id).delete()
-    print(genre)
     return genre
