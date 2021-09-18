@@ -10,6 +10,8 @@ class Genre(Model):
     created_at = fields.DatetimeField()
     updated_at = fields.DatetimeField()
 
+    movies: fields.ManyToManyRelation["Movie"]
+
     class Meta:
         table = "genre"
         ordering = ["created_at"]
