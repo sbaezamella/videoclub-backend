@@ -7,21 +7,19 @@ log = logging.getLogger(__name__)
 
 
 class Settings(BaseSettings):
-    API_V1_STR: str = "/api/v1"
+    api_v1_str: str = "/api/v1"
     # SECRET_KEY: str
     # PG_DSN: PostgresDsn = "postgres://postgres:password@localhost/videoclub"
 
-    PROJECT_NAME: str
+    project_name: str = "Videoclub API"
 
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
-    ENVIRONMENT: str = os.environ.get("ENVIRONMENT", "development")
-    TESTING: bool = os.environ.get("TESTING", 0)
-
-    class Config:
-        case_sensitive = True
+    postgres_host: str = os.environ.get("POSTGRES_HOST", "localhost")
+    postgres_port: int = os.environ.get("POSTGRES_PORT", 5432)
+    postgres_user: str = os.environ.get("POSTGRES_USER", "postgres")
+    postgres_password: str = os.environ.get("POSTGRES_PASSWORD", "password")
+    postgres_database: str = os.environ.get("POSTGRES_DATABASE", "videoclub")
+    environment: str = os.environ.get("ENVIRONMENT", "development")
+    testing: bool = os.environ.get("TESTING", 0)
 
 
 log.info("Loading config settings from the environment...")

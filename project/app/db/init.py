@@ -6,6 +6,8 @@ from tortoise.contrib.fastapi import register_tortoise
 
 from fastapi import FastAPI
 
+from app.core.config import settings
+
 log = logging.getLogger(__name__)
 
 config = {
@@ -13,11 +15,11 @@ config = {
         "default": {
             "engine": "tortoise.backends.asyncpg",
             "credentials": {
-                "host": os.environ.get("POSTGRES_SERVER"),
-                "port": os.environ.get("POSTGRES_PORT"),
-                "user": os.environ.get("POSTGRES_USER"),
-                "password": os.environ.get("POSTGRES_PASSWORD"),
-                "database": os.environ.get("POSTGRES_DB"),
+                "host": settings.postgres_host,
+                "port": settings.postgres_port,
+                "user": settings.postgres_user,
+                "password": settings.postgres_password,
+                "database": settings.postgres_database,
             },
         },
     },

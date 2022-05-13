@@ -11,10 +11,10 @@ log = logging.getLogger(__name__)
 
 def create_application() -> FastAPI:
     application = FastAPI(
-        title=settings.PROJECT_NAME,
+        title=settings.project_name,
         description="Videoclub RESTful API",
         version="1.0",
-        openapi_url=f"{settings.API_V1_STR}/openapi.json",
+        openapi_url=f"{settings.api_v1_str}/openapi.json",
     )
     application.include_router(api_router, prefix="/api/v1")
     application.include_router(router)
