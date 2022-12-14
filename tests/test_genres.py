@@ -1,18 +1,29 @@
 from datetime import datetime
+from typing import List
 
 from starlette.testclient import TestClient
 
 from app.crud import crud_genre
+from app.core.config import settings
 
-url = "/api/v1"
+url = settings.api_v1_str
 
 
-def test_get_all_genres(client: TestClient):
+def test_get_all_genres(client: TestClient, monkeypatch) -> None:
+    mocked_response = []
+
+    async def mock_get_all() -> List:
+        return mocked_response
+
+    monkeypatch.setattr(crud_genre, "get_all", mock_get_all)
+
     response = client.get(f"{url}/genres/")
+
     assert response.status_code == 200
+    assert response.json() == mocked_response
 
 
-def test_create_genre(client: TestClient, monkeypatch):
+def test_create_genre(client: TestClient, monkeypatch) -> None:
     test_request_payload = {
         "name": "something",
     }
@@ -39,7 +50,7 @@ def test_create_genre(client: TestClient, monkeypatch):
     assert response.json() == test_response_payload
 
 
-def test_get_genre(client: TestClient, monkeypatch):
+def test_get_genre(client: TestClient, monkeypatch) -> None:
     datetime_now = datetime.utcnow().isoformat()
     test_data = {
         "id": 1,
@@ -58,7 +69,7 @@ def test_get_genre(client: TestClient, monkeypatch):
     assert response.json() == test_data
 
 
-def test_get_genre_not_found(client: TestClient, monkeypatch):
+def test_get_genre_not_found(client: TestClient, monkeypatch) -> None:
     async def mock_get(genre_id):
         return None
 
@@ -69,7 +80,7 @@ def test_get_genre_not_found(client: TestClient, monkeypatch):
     assert response.json().get("detail") == "Genre not found"
 
 
-def test_update_genre(client: TestClient, monkeypatch):
+def test_update_genre(client: TestClient, monkeypatch) -> None:
     datetime_now = datetime.utcnow().isoformat()
     test_request_payload = {
         "name": "something",
@@ -94,7 +105,7 @@ def test_update_genre(client: TestClient, monkeypatch):
     assert response.json() == test_response_payload
 
 
-def test_update_genre_not_found(client: TestClient, monkeypatch):
+def test_update_genre_not_found(client: TestClient, monkeypatch) -> None:
     test_request_payload = {
         "name": "something",
     }
@@ -112,12 +123,12 @@ def test_update_genre_not_found(client: TestClient, monkeypatch):
     assert response.json().get("detail") == "Genre not found"
 
 
-def test_update_genre_name_taken(client: TestClient, monkeypatch):
+def test_update_genre_name_taken(client: TestClient, monkeypatch) -> None:
     # TODO: create test for name taken
     assert True == False
 
 
-def test_delete_genre(client: TestClient, monkeypatch):
+def test_delete_genre(client: TestClient, monkeypatch) -> None:
     async def mock_delete(id):
         return 1  # deleted count, 1 if found else 0
 
@@ -127,7 +138,7 @@ def test_delete_genre(client: TestClient, monkeypatch):
     assert response.status_code == 204
 
 
-def test_delete_genre_not_found(client: TestClient, monkeypatch):
+def test_delete_genre_not_found(client: TestClient, monkeypatch) -> None:
     async def mock_delete(id):
         return 0  # deleted count, 1 if found else 0
 
